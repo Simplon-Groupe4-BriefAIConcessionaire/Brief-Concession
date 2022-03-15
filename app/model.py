@@ -1,4 +1,4 @@
-from app import db
+from __init__ import db
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func
 
 

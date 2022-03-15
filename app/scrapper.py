@@ -129,9 +129,9 @@ def get_infos():
 
         infos.append([version, prix, annee, km, energie, emission, conso, boitier, portes, puissance, places])
 
-        print(infos[i])
+        
         i = i+1
         time.sleep(5)
-    
+        return infos
 
 get_infos()
