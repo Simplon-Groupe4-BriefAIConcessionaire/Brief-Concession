@@ -131,7 +131,7 @@ def get_infos():
 
         print(infos[i])
         i = i+1
-        time.sleep(15)
+        time.sleep(5)
     
 
 get_infos()
