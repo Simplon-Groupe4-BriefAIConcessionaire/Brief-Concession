@@ -4,25 +4,27 @@ from bs4 import BeautifulSoup
 
 def get_links():
 
-    urlrecherche = "https://www.paruvendu.fr/auto-moto/listefo/default/default?origine=affinage&tri=indiceQualite&ord=desc&np=&r=VO&trub=&ty=&r2=&codeINSEE=&lo=&pa=&ray=15&px0=&px1=&nrj=&co2=&a0=&a1=&km0=&km1=&npo=&tr=&fulltext=&codPro=&pf0=&pf1="
-    response = requests.get(urlrecherche)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    with open("app/links.txt", 'w') as f:
 
-    div = soup.findAll("div", {"class": "lazyload_bloc ergov3-annonce ergov3-annonceauto"})
+        for i in range(1, 21):
+            urlrecherche = "https://www.paruvendu.fr/auto-moto/listefo/default/default?auto-typeRech=&reaf=1&r2=&px1=&md=&codeINSEE=&lo=&pa=&ray=15&r=VVO00000&r1=&trub=&nrj=&km1=&co2=&a0=&a1=&npo=0&tr=&pf0=&pf1=&fulltext=&codPro=&p=" + str(i)
+            response = requests.get(urlrecherche)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            div = soup.findAll("div", {"class": "lazyload_bloc ergov3-annonce ergov3-annonceauto"})
 
-    links = []
+            for l in div:
+                a = l.find('a')
+                link = a['href']
+                f.write(link  + '\n')
 
-    for l in div:
-        a = l.find('a')
-        link = a['href']
-        links.append(link)
-
-    return links
+get_links()
 
 
 def get_infos():
 
-    links = get_links()
+    file1 = open('app\links.txt', 'r')
+
+    links = file1.readlines()
 
     infos = []
 
@@ -132,6 +134,5 @@ def get_infos():
         print(infos[i])
         i = i+1
         time.sleep(5)
-    
 
 get_infos()
