@@ -134,6 +134,6 @@ def get_infos():
         
         i = i+1
         time.sleep(5)
-        return infos
+    return infos
 
 get_infos()

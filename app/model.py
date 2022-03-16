@@ -1,6 +1,6 @@
+import sqlite3
 from __init__ import db
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func
-
 
 class Voitures(db.Model):
     __tablename__ = 'Voitures_occasion'
@@ -21,3 +21,6 @@ class Voitures(db.Model):
 
     def __str__(self):
         return self.nom
+
+
+
