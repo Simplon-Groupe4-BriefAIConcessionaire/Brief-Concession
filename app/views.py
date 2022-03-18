@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, json
-from .model import Voitures
+from model import Voitures
 from app import db
 import pandas as pd
+from arbre import arbre
 
 views = Blueprint('views', __name__)
 
@@ -49,27 +50,15 @@ def AjoutVoiture():
         places=voiture_places
         )
 
-        db.session.add(nv_voiture)
-        db.session.commit()
-    #     result = machine_learning.my_model_execution()
-        # return render_template('liste_voitures.html')
-    #     # try:
-    #     #     # db.session.add(nv_etablissement)
-    #     #     # db.session.commit()
-    #     #     return render_template("prediction.html")
-    #     #     # return redirect("/liste_E")
-    #     # except:
-    #     #     return " Erreur lors de l'enregistrement"
-    # else :
-    #     # etablissements = Etablissement.query.order_by(Etablissement.id)
-    #     return render_template("ajout_E.html")
+    db.session.add(nv_voiture)
+    db.session.commit()
     
+    result = arbre.my_model_execution()
+    return prediction_nouvelle_voiture(result)
+    
+@views.route('/prediction', methods=['GET', 'POST'])
 
-# @views.route('/prediction', methods=['GET', 'POST'])
-# def prediction():
-#     return render_template("prediction.html")
+def prediction_nouvelle_voiture(result):
+    result = result
+    return render_template("prediction.html", result = result)
 
-# def prediction_nouvel_etablissement(result):
-#     result = result
-#     # result = session['result']       # counterpart for session
-#     return render_template("prediction.html", result = result)
