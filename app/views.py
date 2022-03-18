@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, json
-from model import Voitures
+from .model import Voitures
 from app import db
 import pandas as pd
-from arbre import arbre
+from .arbre import arbre
 
 views = Blueprint('views', __name__)
 
@@ -57,8 +57,9 @@ def AjoutVoiture():
     return prediction_nouvelle_voiture(result)
     
 @views.route('/prediction', methods=['GET', 'POST'])
-
-def prediction_nouvelle_voiture(result):
-    result = result
-    return render_template("prediction.html", result = result)
-
+def prediction_nouvelle_voiture():
+    if request.method == "POST":
+        voiture_prix = request.json['prix']
+    # result = result
+    # return render_template("prediction.html", result = result)
+    return "<p>"+str(voiture_prix)+"</p>"
