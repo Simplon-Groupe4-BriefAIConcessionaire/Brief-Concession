@@ -54,15 +54,16 @@ def AjoutVoiture():
     db.session.commit()
     
     
-    
-@views.route('/prediction', methods=['GET', 'POST'])
+#Fonction pour ma prédiction. Sur Postman en post, body et json je rentre des paramètres et je rentre mon URL+le chemin de la prédiction    
+@views.route('/prediction', methods=['POST'])
 def prediction_nouvelle_voiture():
     if request.method == "POST":
-        voiture_annee = request.form['Date']
-        voiture_kilometrage = request.form['Km']
-        voiture_puissance = request.form['Puissance']
-    result = arbre.my_model_execution()
-    return prediction_nouvelle_voiture(result)
+        voiture_annee = request.json['Annee']
+        voiture_kilometrage = request.json['Km']
+        voiture_puissance = request.json['Puissance']
+    result = arbre.predict([[voiture_annee,voiture_kilometrage,voiture_puissance]])
+    print(result)
+    return "<p>"+str(result)+"</p>"
+    # return prediction_nouvelle_voiture(result)
     # result = result
-    # return render_template("prediction.html", result = result)
     # return "<p>"+str(voiture_prix)+"</p>"
