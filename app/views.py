@@ -53,13 +53,16 @@ def AjoutVoiture():
     db.session.add(nv_voiture)
     db.session.commit()
     
-    result = arbre.my_model_execution()
-    return prediction_nouvelle_voiture(result)
+    
     
 @views.route('/prediction', methods=['GET', 'POST'])
 def prediction_nouvelle_voiture():
     if request.method == "POST":
-        voiture_prix = request.json['prix']
+        voiture_annee = request.form['Date']
+        voiture_kilometrage = request.form['Km']
+        voiture_puissance = request.form['Puissance']
+    result = arbre.my_model_execution()
+    return prediction_nouvelle_voiture(result)
     # result = result
     # return render_template("prediction.html", result = result)
-    return "<p>"+str(voiture_prix)+"</p>"
+    # return "<p>"+str(voiture_prix)+"</p>"
