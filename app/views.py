@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, json
-from model import Voitures
+from .model import Voitures
 from app import db
 import pandas as pd
-from arbre import arbre
+from .arbre import arbre
 
 views = Blueprint('views', __name__)
 
@@ -53,12 +53,17 @@ def AjoutVoiture():
     db.session.add(nv_voiture)
     db.session.commit()
     
-    result = arbre.my_model_execution()
-    return prediction_nouvelle_voiture(result)
     
-@views.route('/prediction', methods=['GET', 'POST'])
-
-def prediction_nouvelle_voiture(result):
-    result = result
-    return render_template("prediction.html", result = result)
-
+#Fonction pour ma prédiction. Sur Postman en post, body et json je rentre des paramètres et je rentre mon URL+le chemin de la prédiction    
+@views.route('/prediction', methods=['POST'])
+def prediction_nouvelle_voiture():
+    if request.method == "POST":
+        voiture_annee = request.json['Annee']
+        voiture_kilometrage = request.json['Km']
+        voiture_puissance = request.json['Puissance']
+    result = arbre.predict([[voiture_annee,voiture_kilometrage,voiture_puissance]])
+    print(result)
+    return "<p>"+str(result)+"</p>"
+    # return prediction_nouvelle_voiture(result)
+    # result = result
+    # return "<p>"+str(voiture_prix)+"</p>"
